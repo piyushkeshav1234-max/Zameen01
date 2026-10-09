@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Zameen Calculator Bihar | Katha, Dhur, Decimal</title>
+<meta name="description" content="Bihar land area calculator. Calculate land area in square feet, Katha, Dhur and Decimal using side measurements.">
+<meta name="theme-color" content="#14532d">
+
+<style>
+:root {
+    --green: #166534;
+    --green-dark: #14532d;
+    --green-light: #dcfce7;
+    --background: #f3f7f4;
+    --text: #17251b;
+    --muted: #647067;
+    --border: #d8e2da;
+    --white: #ffffff;
+    --danger: #b91c1c;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px 14px 36px;
+    font-family: system-ui, -apple-system, "Segoe UI",
+                 Roboto, Arial, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.brand {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--green-dark);
+}
+
+.lang-btn,
+.secondary-btn {
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--green-dark);
+    padding: 9px 13px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.hero {
+    text-align: center;
+    padding: 12px 0 22px;
+}
+
+.hero h1 {
+    font-size: clamp(1.65rem, 5vw, 2.25rem);
+    line-height: 1.2;
+    margin: 0 0 10px;
+    color: var(--green-dark);
+}
+
+.hero p {
+    color: var(--muted);
+    margin: 0;
+}
+
+.card {
+    background: var(--white);
+    padding: clamp(18px, 4vw, 28px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(20, 83, 45, 0.06);
+    margin-bottom: 18px;
+}
+
+.section-title {
+    margin: 0 0 16px;
+    font-size: 1.15rem;
+}
+
+label {
+    display: block;
+    font-weight: 700;
+    font-size: 0.94rem;
+    margin: 15px 0 6px;
+}
+
+input, select {
+    width: 100%;
+    min-height: 48px;
+    padding: 11px 12px;
+    border: 1px solid #cbd5ce;
+    border-radius: 11px;
+    font: inherit;
+    font-size: 16px;
+    background: white;
+    color: var(--text);
+}
+
+input:focus, select:focus, button:focus-visible {
+    outline: 3px solid rgba(22, 101, 52, 0.2);
+    outline-offset: 2px;
+    border-color: var(--green);
+}
+
+.hint {
+    color: var(--muted);
+    font-size: 0.84rem;
+    margin-top: 5px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 14px;
+}
+
+button {
+    font: inherit;
+}
+
+.primary-btn {
+    width: 100%;
+    min-height: 50px;
+    margin-top: 22px;
+    padding: 13px 16px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--green);
+    color: white;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.primary-btn:hover {
+    background: var(--green-dark);
+}
+
+.actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.error {
+    display: none;
+    margin-top: 14px;
+    padding: 12px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    color: var(--danger);
+    font-size: 0.92rem;
+}
+
+.result {
+    display: none;
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.result-heading {
+    margin: 0 0 15px;
+    font-size: 1.15rem;
+    color: var(--green-dark);
+}
+
+.area-highlight {
+    background: var(--green-light);
+    padding: 18px;
+    border-radius: 14px;
+    margin-bottom: 14px;
+}
+
+.area-label {
+    font-size: 0.9rem;
+    color: var(--green-dark);
+}
+
+.area-number {
+    display: block;
+    font-size: clamp(1.65rem, 6vw, 2.1rem);
+    font-weight: 850;
+    overflow-wrap: anywhere;
+    color: var(--green-dark);
+}
+
+.area-unit {
+    font-size: 0.9rem;
+}
+
+.result-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.result-item {
+    padding: 13px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    min-width: 0;
+}
+
+.result-item span {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+.result-item strong {
+    display: block;
+    margin-top: 4px;
+    font-size: 1.05rem;
+    overflow-wrap: anywhere;
+}
+
+.note {
+    font-size: 0.86rem;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+details {
+    border-top: 1px solid var(--border);
+    margin-top: 18px;
+    padding-top: 14px;
+}
+
+summary {
+    cursor: pointer;
+    font-weight: 750;
+    color: var(--green-dark);
+}
+
+footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.84rem;
+    padding: 8px;
+}
+
+@media (max-width: 420px) {
+    body {
+        padding: 14px 10px 28px;
+    }
+
+    .grid {
+        gap: 0 10px;
+    }
+
+    .card {
+        border-radius: 15px;
+    }
+
+    .result-list {
+        gap: 8px;
+    }
+
+    .result-item {
+        padding: 10px;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+    <header class="topbar">
+        <div class="brand">🌿 Zameen Calculator</div>
+        <button class="lang-btn" id="languageBtn" type="button">
+            English
+        </button>
+    </header>
+
+    <section class="hero">
+        <h1 id="mainTitle">📐 जमीन कैलकुलेटर</h1>
+        <p id="subtitle">
+            जमीन का क्षेत्रफल और कट्ठा-धुर का हिसाब आसानी से निकालें।
+        </p>
+    </section>
+
+    <main class="card">
+        <h2 class="section-title" id="measureTitle">
+            जमीन की नाप भरें
+        </h2>
+
+        <label for="unit" id="unitLabel">माप की इकाई</label>
+        <select id="unit">
+            <option value="feet">Feet (फीट)</option>
+            <option value="kadi">Kadi (कड़ी)</option>
+        </select>
+
+        <p class="hint" id="unitHint">
+            सभी चार माप एक ही इकाई में दर्ज करें।
+        </p>
+
+        <div class="grid">
+            <div>
+                <label for="l1" id="l1Label">लंबाई 1</label>
+                <input id="l1" type="number" min="0"
+                       step="any" inputmode="decimal"
+                       placeholder="जैसे 184">
+            </div>
+
+            <div>
+                <label for="l2" id="l2Label">लंबाई 2</label>
+                <input id="l2" type="number" min="0"
+                       step="any" inputmode="decimal"
+                       placeholder="जैसे 208">
+            </div>
+
+            <div>
+                <label for="w1" id="w1Label">चौड़ाई 1</label>
+                <input id="w1" type="number" min="0"
+                       step="any" inputmode="decimal"
+                       placeholder="जैसे 118">
+            </div>
+
+            <div>
+                <label for="w2" id="w2Label">चौड़ाई 2</label>
+                <input id="w2" type="number" min="0"
+                       step="any" inputmode="decimal"
+                       placeholder="जैसे 39">
+            </div>
+        </div>
+
+        <button class="primary-btn" id="calculateBtn" type="button">
+            कुल रकबा निकालें
+        </button>
+
+        <div class="error" id="errorBox" role="alert"></div>
+
+        <section class="result" id="resultBox" aria-live="polite">
+            <h2 class="result-heading" id="resultTitle">
+                📊 जमीन का हिसाब
+            </h2>
+
+            <div class="area-highlight">
+                <span class="area-label" id="areaLabel">
+                    अनुमानित क्षेत्रफल
+                </span>
+                <strong class="area-number" id="resSqFt">—</strong>
+                <span class="area-unit">Square Feet (sq ft)</span>
+            </div>
+
+            <div class="result-list">
+                <div class="result-item">
+                    <span id="kathaLabel">कट्ठा और धुर</span>
+                    <strong id="resKatha">—</strong>
+                </div>
+
+                <div class="result-item">
+                    <span id="dismilLabel">डिसमिल</span>
+                    <strong id="resDismil">—</strong>
+                </div>
+
+                <div class="result-item">
+                    <span id="acreLabel">एकड़</span>
+                    <strong id="resAcre">—</strong>
+                </div>
+
+                <div class="result-item">
+                    <span id="sqmLabel">वर्ग मीटर</span>
+                    <strong id="resSqm">—</strong>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="secondary-btn" id="copyBtn" type="button">
+                    📋 हिसाब कॉपी करें
+                </button>
+
+                <button class="secondary-btn" id="shareBtn" type="button">
+                    ↗️ शेयर करें
+                </button>
+            </div>
+
+            <details>
+                <summary id="formulaTitle">गणना कैसे हुई?</summary>
+                <p id="formulaText" class="note"></p>
+            </details>
+        </section>
+    </main>
+
+    <section class="card">
+        <h2 class="section-title" id="infoTitle">
+            📌 जरूरी जानकारी
+        </h2>
+
+        <p class="note" id="infoText">
+            यह कैलकुलेटर चारों भुजाओं के औसत से क्षेत्रफल का अनुमान लगाता है।
+            यह हर आकार के प्लॉट का सटीक क्षेत्रफल नहीं देता।
+            कट्ठा और धुर का रूपांतरण चुने गए स्थानीय मान पर निर्भर करता है।
+            कानूनी या रजिस्ट्री संबंधी काम के लिए आधिकारिक नाप की पुष्टि करें।
+        </p>
+    </section>
+
+    <footer>
+        <span id="footerText">
+            सही नाप और स्थानीय रूपांतरण मान का उपयोग करें।
+        </span>
+    </footer>
+</div>
+
+<script>
+"use strict";
+
+/*
+ * CONFIGURATION
+ *
+ * Existing code's Bihar conversion values are retained as defaults.
+ * Verify these values for the relevant locality before relying on them.
+ *
+ * Kadi conversion is also configurable because the local definition
+ * of Kadi must be confirmed.
+ */
+const CONFIG = {
+    SQFT_PER_KATHA: 1361.25,
+    DHUR_PER_KATHA: 20,
+    SQFT_PER_DISMIL: 435.6,
+
+    // Existing code's assumed value:
+    SQFT_PER_SQUARE_KADI: 0.4356
+};
+
+CONFIG.SQFT_PER_DHUR =
+    CONFIG.SQFT_PER_KATHA / CONFIG.DHUR_PER_KATHA;
+
+const $ = id => document.getElementById(id);
+
+let currentLanguage = "hi";
+let lastResult = null;
+
+const translations = {
+    hi: {
+        languageButton: "English",
+        title: "📐 जमीन कैलकुलेटर",
+        subtitle: "जमीन का क्षेत्रफल और कट्ठा-धुर का हिसाब आसानी से निकालें।",
+        measureTitle: "जमीन की नाप भरें",
+        unitLabel: "माप की इकाई",
+        unitHint: "सभी चार माप एक ही इकाई में दर्ज करें।",
+        l1: "लंबाई 1",
+        l2: "लंबाई 2",
+        w1: "चौड़ाई 1",
+        w2: "चौड़ाई 2",
+        calculate: "कुल रकबा निकालें",
+        resultTitle: "📊 जमीन का हिसाब",
+        areaLabel: "अनुमानित क्षेत्रफल",
+        katha: "कट्ठा और धुर",
+        dismil: "डिसमिल",
+        acre: "एकड़",
+        sqm: "वर्ग मीटर",
+        copy: "📋 हिसाब कॉपी करें",
+        share: "↗️ शेयर करें",
+        formulaTitle: "गणना कैसे हुई?",
+        infoTitle: "📌 जरूरी जानकारी",
+        infoText: "यह कैलकुलेटर चारों भुजाओं के औसत से क्षेत्रफल का अनुमान लगाता है। यह हर आकार के प्लॉट का सटीक क्षेत्रफल नहीं देता। कट्ठा और धुर का रूपांतरण चुने गए स्थानीय मान पर निर्भर करता है। कानूनी या रजिस्ट्री संबंधी काम के लिए आधिकारिक नाप की पुष्टि करें।",
+        footer: "सही नाप और स्थानीय रूपांतरण मान का उपयोग करें।",
+        required: "कृपया चारों माप भरें। सभी मान शून्य से बड़े होने चाहिए।",
+        invalid: "कृपया वैध और सीमित संख्यात्मक माप दर्ज करें।",
+        copySuccess: "हिसाब कॉपी हो गया।",
+        copyFail: "कॉपी नहीं हो सका। कृपया परिणाम को मैन्युअल रूप से कॉपी करें।",
+        shareFail: "शेयर सुविधा उपलब्ध नहीं है।",
+        formula: "औसत लंबाई = (लंबाई 1 + लंबाई 2) ÷ 2। औसत चौड़ाई = (चौड़ाई 1 + चौड़ाई 2) ÷ 2। अनुमानित क्षेत्रफल = औसत लंबाई × औसत चौड़ाई। इसके बाद चुनी गई इकाई के अनुसार वर्ग फीट में रूपांतरण किया गया।",
+        resultText: "जमीन का हिसाब",
+        estimated: "अनुमानित क्षेत्रफल",
+        kathaResult: "कट्ठा",
+        dhurResult: "धुर",
+        unitFeet: "फीट",
+        unitKadi: "कड़ी"
+    },
+    en: {
+        languageButton: "हिंदी",
+        title: "📐 Land Calculator",
+        subtitle: "Estimate land area and convert it into Katha, Dhur and Decimal.",
+        measureTitle: "Enter plot measurements",
+        unitLabel: "Measurement unit",
+        unitHint: "Enter all four measurements in the same unit.",
+        l1: "Length 1",
+        l2: "Length 2",
+        w1: "Width 1",
+        w2: "Width 2",
+        calculate: "Calculate land area",
+        resultTitle: "📊 Land calculation",
+        areaLabel: "Estimated area",
+        katha: "Katha and Dhur",
+        dismil: "Decimal",
+        acre: "Acre",
+        sqm: "Square metres",
+        copy: "📋 Copy result",
+        share: "↗️ Share result",
+        formulaTitle: "How is it calculated?",
+        infoTitle: "📌 Important information",
+        infoText: "This calculator estimates area using the averages of the two length measurements and two width measurements. It does not give the exact area of every plot shape. Katha and Dhur conversions depend on the selected local standard. Verify official measurements for legal or registration purposes.",
+        footer: "Use verified measurements and local conversion values.",
+        required: "Please enter all four measurements. Every value must be greater than zero.",
+        invalid: "Please enter valid, finite numerical measurements.",
+        copySuccess: "Result copied.",
+        copyFail: "Could not copy. Please copy the result manually.",
+        shareFail: "Sharing is not available on this device.",
+        formula: "Average length = (Length 1 + Length 2) ÷ 2. Average width = (Width 1 + Width 2) ÷ 2. Estimated area = average length × average width. The result is then converted to square feet according to the selected unit.",
+        resultText: "Land calculation",
+        estimated: "Estimated area",
+        kathaResult: "Katha",
+        dhurResult: "Dhur",
+        unitFeet: "Feet",
+        unitKadi: "Kadi"
+    }
+};
+
+function setText(id, value) {
+    $(id).textContent = value;
+}
+
+function hideResult() {
+    $("resultBox").style.display = "none";
+    $("errorBox").style.display = "none";
+    lastResult = null;
+}
+
+function showError(message) {
+    $("errorBox").textContent = message;
+    $("errorBox").style.display = "block";
+}
+
+function applyLanguage() {
+    const t = translations[currentLanguage];
+
+    document.documentElement.lang = currentLanguage;
+    setText("languageBtn", t.languageButton);
+    setText("mainTitle", t.title);
+    setText("subtitle", t.subtitle);
+    setText("measureTitle", t.measureTitle);
+    setText("unitLabel", t.unitLabel);
+    setText("unitHint", t.unitHint);
+    setText("l1Label", t.l1);
+    setText("l2Label", t.l2);
+    setText("w1Label", t.w1);
+    setText("w2Label", t.w2);
+    setText("calculateBtn", t.calculate);
+    setText("resultTitle", t.resultTitle);
+    setText("areaLabel", t.areaLabel);
+    setText("kathaLabel", t.katha);
+    setText("dismilLabel", t.dismil);
+    setText("acreLabel", t.acre);
+    setText("sqmLabel", t.sqm);
+    setText("copyBtn", t.copy);
+    setText("shareBtn", t.share);
+    setText("formulaTitle", t.formulaTitle);
+    setText("infoTitle", t.infoTitle);
+    setText("infoText", t.infoText);
+    setText("footerText", t.footer);
+
+    if (lastResult) {
+        renderResult(lastResult);
+    }
+}
+
+function formatNumber(value, maxDigits = 2) {
+    return new Intl.NumberFormat(
+        currentLanguage === "hi" ? "en-IN" : "en-US",
+        {
+            maximumFractionDigits: maxDigits
+        }
+    ).format(value);
+}
+
+function calculateArea() {
+    $("errorBox").style.display = "none";
+
+    const values = ["l1", "l2", "w1", "w2"].map(id => {
+        const input = $(id);
+        return {
+            raw: input.value.trim(),
+            value: input.value.trim() === "" ? NaN : Number(input.value)
+        };
+    });
+
+    const t = translations[currentLanguage];
+
+    if (values.some(item => item.raw === "" || item.value <= 0)) {
+        hideResult();
+        showError(t.required);
+        return;
+    }
+
+    if (values.some(item => !Number.isFinite(item.value))) {
+        hideResult();
+        showError(t.invalid);
+        return;
+    }
+
+    const [l1, l2, w1, w2] = values.map(item => item.value);
+    const unit = $("unit").value;
+
+    const avgL = (l1 + l2) / 2;
+    const avgW = (w1 + w2) / 2;
+
+    const estimatedArea = avgL * avgW;
+
+    const sqft = unit === "feet"
+        ? estimatedArea
+        : estimatedArea * CONFIG.SQFT_PER_SQUARE_KADI;
+
+    if (!Number.isFinite(sqft) || sqft <= 0) {
+        hideResult();
+        showError(t.invalid);
+        return;
+    }
+
+    const totalDhur = sqft / CONFIG.SQFT_PER_DHUR;
+    const totalKatha = sqft / CONFIG.SQFT_PER_KATHA;
+
+    const wholeKatha = Math.floor(
+        totalDhur / CONFIG.DHUR_PER_KATHA
+    );
+
+    const remainingDhur =
+        totalDhur - wholeKatha * CONFIG.DHUR_PER_KATHA;
+
+    lastResult = {
+        sqft,
+        totalDhur,
+        totalKatha,
+        wholeKatha,
+        remainingDhur,
+        dismil: sqft / CONFIG.SQFT_PER_DISMIL,
+        acre: sqft / 43560,
+        sqm: sqft * 0.09290304,
+        avgL,
+        avgW,
+        unit,
+        measurements: { l1, l2, w1, w2 }
+    };
+
+    renderResult(lastResult);
+    $("resultBox").style.display = "block";
+    $("resultBox").scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+    });
+}
+
+function renderResult(r) {
+    const t = translations[currentLanguage];
+
+    setText("resSqFt", formatNumber(r.sqft));
+    setText(
+        "resKatha",
+        `${formatNumber(r.wholeKatha, 0)} ${t.kathaResult}, ` +
+        `${formatNumber(r.remainingDhur)} ${t.dhurResult}`
+    );
+    setText("resDismil", formatNumber(r.dismil));
+    setText("resAcre", formatNumber(r.acre, 4));
+    setText("resSqm", formatNumber(r.sqm));
+
+    setText(
+        "formulaText",
+        t.formula +
+        `\n\nAverage length: ${formatNumber(r.avgL)} ${r.unit}\n` +
+        `Average width: ${formatNumber(r.avgW)} ${r.unit}`
+    );
+}
+
+function buildShareText() {
+    if (!lastResult) return "";
+
+    const r = lastResult;
+    const t = translations[currentLanguage];
+
+    return [
+        t.resultText,
+        `${t.estimated}: ${formatNumber(r.sqft)} sq ft`,
+        `${t.katha}: ${formatNumber(r.wholeKatha, 0)} ${t.kathaResult}, ` +
+            `${formatNumber(r.remainingDhur)} ${t.dhurResult}`,
+        `${t.dismil}: ${formatNumber(r.dismil)}`,
+        `${t.acre}: ${formatNumber(r.acre, 4)}`,
+        `${t.sqm}: ${formatNumber(r.sqm)}`,
+        "",
+        t.infoText
+    ].join("\n");
+}
+
+async function copyResult() {
+    if (!lastResult) return;
+
+    const t = translations[currentLanguage];
+    const text = buildShareText();
+
+    try {
+        await navigator.clipboard.writeText(text);
+        alert(t.copySuccess);
+    } catch {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+
+        const copied = document.execCommand("copy");
+        textarea.remove();
+
+        alert(copied ? t.copySuccess : t.copyFail);
+    }
+}
+
+async function shareResult() {
+    if (!lastResult) return;
+
+    const t = translations[currentLanguage];
+    const text = buildShareText();
+
+    if (navigator.share) {
+        try {
+            await navigator.share({
+                title: t.resultText,
+                text
+            });
+        } catch (error) {
+            if (error.name !== "AbortError") {
+                alert(t.shareFail);
+            }
+        }
+    } else {
+        await copyResult();
+    }
+}
+
+$("calculateBtn").addEventListener("click", calculateArea);
+$("copyBtn").addEventListener("click", copyResult);
+$("shareBtn").addEventListener("click", shareResult);
+
+$("languageBtn").addEventListener("click", () => {
+    currentLanguage = currentLanguage === "hi" ? "en" : "hi";
+    applyLanguage();
+});
+
+$("unit").addEventListener("change", hideResult);
+
+["l1", "l2", "w1", "w2"].forEach(id => {
+    $(id).addEventListener("input", hideResult);
+});
+
+applyLanguage();
+</script>
+</body>
+</html>
+
+
+
